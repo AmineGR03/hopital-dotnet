@@ -1,0 +1,79 @@
+@model gestion_hopital.Controllers.UserViewModel
+
+@{
+    ViewData["Title"] = "Supprimer l'utilisateur";
+}
+
+<div class="page-header fade-in">
+    <div class="container-fluid">
+        <h1 class="page-title"><i class="fas fa-trash me-2"></i>Supprimer l'utilisateur</h1>
+        <p class="page-subtitle mb-0">Confirmer la suppression de l'utilisateur</p>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card fade-in border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Attention</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</strong>
+                        <p class="mb-0 mt-2">Cette action est irréversible.</p>
+                    </div>
+
+                    <dl class="row">
+                        <dt class="col-sm-4">
+                            <i class="fas fa-envelope me-2"></i>Email
+                        </dt>
+                        <dd class="col-sm-8">
+                            <strong>@Html.DisplayFor(model => model.Email)</strong>
+                        </dd>
+
+                        <dt class="col-sm-4">
+                            <i class="fas fa-user-tag me-2"></i>Rôle
+                        </dt>
+                        <dd class="col-sm-8">
+                            @{
+                                var roleClass = Model.Role switch
+                                {
+                                    "admin" => "danger",
+                                    "doctor" => "primary",
+                                    "receptionist" => "info",
+                                    _ => "secondary"
+                                };
+                            }
+                            <span class="badge bg-@roleClass">@Html.DisplayFor(model => model.Role)</span>
+                        </dd>
+
+                        @if (!string.IsNullOrEmpty(Model.DoctorName))
+                        {
+                            <dt class="col-sm-4">
+                                <i class="fas fa-user-doctor me-2"></i>Médecin associé
+                            </dt>
+                            <dd class="col-sm-8">
+                                <span class="badge bg-info">@Html.DisplayFor(model => model.DoctorName)</span>
+                            </dd>
+                        }
+                    </dl>
+
+                    <form asp-action="Delete" method="post" class="mt-4">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Annuler
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash me-2"></i>Supprimer définitivement
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,60 @@
+========================================
+IDENTIFIANTS DE CONNEXION - GESTION HOPITAL
+========================================
+
+URL de l'application: http://localhost:6000
+(ou https://localhost:6001 pour HTTPS)
+
+========================================
+
+🔑 ADMINISTRATEUR
+   Email: admin@hopital.com
+   Mot de passe: Admin123!
+   Rôle: admin
+   Accès: Toutes les fonctionnalités (médecins, patients, rendez-vous, prescriptions)
+
+🔑 MÉDECIN 1
+   Email: doctor@hopital.com
+   Mot de passe: Doctor123!
+   Rôle: doctor
+   Associé à: Dr. Jean Martin (Cardiologie)
+   Accès: Patients, rendez-vous, prescriptions (pas de gestion des médecins)
+
+🔑 MÉDECIN 2
+   Email: doctor2@hopital.com
+   Mot de passe: Doctor2123!
+   Rôle: doctor
+   Associé à: Dr. Marie Dubois (Pédiatrie)
+   Accès: Patients, rendez-vous, prescriptions (pas de gestion des médecins)
+
+🔑 RÉCEPTIONNISTE
+   Email: receptionist@hopital.com
+   Mot de passe: Receptionist123!
+   Rôle: receptionist
+   Accès: Médecins, patients, rendez-vous (pas de prescriptions)
+
+========================================
+DONNÉES DE TEST CRÉÉES
+========================================
+
+✓ 3 Médecins
+  - Dr. Jean Martin (Cardiologie)
+  - Dr. Marie Dubois (Pédiatrie)
+  - Dr. Pierre Bernard (Neurologie)
+
+✓ 4 Patients
+  - Sophie Dupont (F, 1985)
+  - Marc Lefebvre (M, 1990)
+  - Julie Moreau (F, 1978)
+  - Lucas Garcia (M, 2000)
+
+✓ 4 Rendez-vous (différents statuts)
+
+✓ 3 Prescriptions
+
+✓ Historiques médicaux avec diagnostics passés
+
+✓ Relations médecin-patient (many-to-many)
+
+========================================
+

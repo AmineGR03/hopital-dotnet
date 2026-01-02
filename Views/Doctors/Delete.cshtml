@@ -1,0 +1,61 @@
+@model gestion_hopital.Models.Doctor
+
+@{
+    ViewData["Title"] = "Supprimer le médecin";
+}
+
+<div class="page-header">
+    <div class="container-fluid">
+        <h1 class="page-title"><i class="fas fa-trash me-2"></i>Supprimer le médecin</h1>
+        <p class="page-subtitle">@Model.NomComplet</p>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="alert alert-warning" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Attention !</strong> Êtes-vous sûr de vouloir supprimer ce médecin ? Cette action est irréversible.
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informations du médecin</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Nom</dt>
+                        <dd class="col-sm-8"><strong>@Html.DisplayFor(model => model.Nom)</strong></dd>
+
+                        <dt class="col-sm-4">Prénom</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Prenom)</dd>
+
+                        <dt class="col-sm-4">Spécialité</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-info">@Html.DisplayFor(model => model.Specialite)</span>
+                        </dd>
+
+                        <dt class="col-sm-4">Téléphone</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Tel)</dd>
+
+                        <dt class="col-sm-4">Adresse</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Adresse)</dd>
+                    </dl>
+
+                    <form asp-action="Delete" class="mt-4">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Annuler
+                            </a>
+                            <button type="submit" class="btn btn-danger" onclick="return window.gestionHopital.confirmDelete('Êtes-vous sûr de vouloir supprimer ce médecin ?')">
+                                <i class="fas fa-trash me-2"></i>Supprimer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

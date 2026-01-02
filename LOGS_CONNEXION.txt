@@ -1,0 +1,196 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    IDENTIFIANTS DE CONNEXION - GESTION HOPITAL                ║
+║                         Système de Gestion Hospitalière                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+🌐 URL DE L'APPLICATION
+   ────────────────────────────────────────────────────────────────────────────
+   HTTP:  http://localhost:6000
+   HTTPS: https://localhost:6001
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                          🔑 ADMINISTRATEUR                                   ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+   📧 Email:        admin@hopital.com
+   🔒 Mot de passe: Admin123!
+   👤 Rôle:         admin
+   
+   ✅ ACCÈS COMPLET:
+      • Gérer les médecins (CRUD complet)
+      • Gérer les patients (CRUD complet)
+      • Gérer les rendez-vous (CRUD complet)
+      • Gérer les prescriptions (CRUD complet)
+      • Voir toutes les statistiques
+      • Accès à toutes les fonctionnalités
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                            🔑 MÉDECIN 1                                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+   📧 Email:        doctor@hopital.com
+   🔒 Mot de passe: Doctor123!
+   👤 Rôle:         doctor
+   👨‍⚕️ Associé à:    Dr. Jean Martin (Cardiologie)
+   
+   ✅ ACCÈS AUTORISÉ:
+      • Gérer les patients (CRUD complet)
+      • Gérer les rendez-vous (CRUD complet)
+      • Gérer les prescriptions (CRUD complet)
+      • Voir ses propres statistiques
+      • Consulter l'historique médical des patients
+   
+   ❌ ACCÈS RESTREINT:
+      • Ne peut pas gérer les médecins
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                            🔑 MÉDECIN 2                                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+   📧 Email:        doctor2@hopital.com
+   🔒 Mot de passe: Doctor2123!
+   👤 Rôle:         doctor
+   👨‍⚕️ Associé à:    Dr. Marie Dubois (Pédiatrie)
+   
+   ✅ ACCÈS AUTORISÉ:
+      • Gérer les patients (CRUD complet)
+      • Gérer les rendez-vous (CRUD complet)
+      • Gérer les prescriptions (CRUD complet)
+      • Voir ses propres statistiques
+      • Consulter l'historique médical des patients
+   
+   ❌ ACCÈS RESTREINT:
+      • Ne peut pas gérer les médecins
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                        🔑 RÉCEPTIONNISTE                                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+   📧 Email:        receptionist@hopital.com
+   🔒 Mot de passe: Receptionist123!
+   👤 Rôle:         receptionist
+   
+   ✅ ACCÈS AUTORISÉ:
+      • Gérer les médecins (CRUD complet)
+      • Gérer les patients (CRUD complet)
+      • Gérer les rendez-vous (CRUD complet)
+      • Voir les statistiques générales
+   
+   ❌ ACCÈS RESTREINT:
+      • Ne peut pas gérer les prescriptions
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                      📊 DONNÉES DE TEST CRÉÉES                                ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+   ✅ 3 MÉDECINS:
+      • Dr. Jean Martin (Cardiologie)
+        📞 0123456789
+        📍 123 Rue de la Santé, Paris
+      
+      • Dr. Marie Dubois (Pédiatrie)
+        📞 0123456790
+        📍 456 Avenue des Enfants, Lyon
+      
+      • Dr. Pierre Bernard (Neurologie)
+        📞 0123456791
+        📍 789 Boulevard Neurologique, Marseille
+
+   ✅ 4 PATIENTS:
+      • Sophie Dupont (F, née le 15/05/1985 - 39 ans)
+        📞 0612345678
+        📍 10 Rue de la Paix, Paris
+        🩸 Historique médical disponible
+      
+      • Marc Lefebvre (M, né le 22/08/1990 - 34 ans)
+        📞 0612345679
+        📍 20 Avenue de la République, Lyon
+        🩸 Historique médical disponible
+      
+      • Julie Moreau (F, née le 03/12/1978 - 46 ans)
+        📞 0612345680
+        📍 30 Boulevard de la Liberté, Marseille
+      
+      • Lucas Garcia (M, né le 10/03/2000 - 24 ans)
+        📞 0612345681
+        📍 40 Rue des Fleurs, Nice
+
+   ✅ 4 RENDEZ-VOUS:
+      • Rendez-vous avec différents statuts (Planifié, Confirmé, Terminé)
+      • Répartis sur différentes dates
+      • Associés aux médecins et patients
+
+   ✅ 3 PRESCRIPTIONS:
+      • Prescriptions avec médicaments et instructions
+      • Dates de validité variées
+      • Certaines peuvent être expirées selon la date actuelle
+
+   ✅ HISTORIQUES MÉDICAUX:
+      • 2 patients avec historique médical complet
+      • Groupes sanguins et allergies renseignés
+      • Diagnostics passés avec dates et conditions
+
+   ✅ RELATIONS:
+      • Relations many-to-many entre médecins et patients
+      • Chaque médecin peut consulter plusieurs patients
+      • Chaque patient peut être consulté par plusieurs médecins
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         🚀 INSTRUCTIONS DE TEST                               ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+   1. Lancez l'application depuis Visual Studio (F5)
+   
+   2. L'application sera accessible sur http://localhost:6000
+   
+   3. Connectez-vous avec l'un des identifiants ci-dessus
+   
+   4. Le seeder s'exécute automatiquement au démarrage et crée toutes les données
+   
+   5. Testez les fonctionnalités selon le rôle :
+      • Navigation dans les menus
+      • Recherche dans les listes
+      • Filtres (rendez-vous)
+      • Création, modification, suppression
+      • Consultation des détails
+      • Dashboard avec statistiques
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         📝 NOTES IMPORTANTES                                   ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+   ⚠️  Les identifiants sont créés automatiquement au premier démarrage
+   ⚠️  Le seeder ne recrée pas les données si elles existent déjà
+   ⚠️  Les mots de passe respectent les exigences de sécurité ASP.NET Identity
+   ⚠️  Tous les utilisateurs ont EmailConfirmed = true pour faciliter les tests
+   ⚠️  Le médecin est automatiquement associé au Dr. Jean Martin
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    🎨 FONCTIONNALITÉS DU TEMPLATE MODERNE                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+   ✨ Recherche en temps réel dans tous les tableaux
+   ✨ Filtres dynamiques (statut des rendez-vous)
+   ✨ Tooltips informatifs sur les actions
+   ✨ Animations fade-in sur les cards
+   ✨ Badges colorés selon les statuts
+   ✨ Design responsive (mobile, tablette, desktop)
+   ✨ Toast notifications pour les actions
+   ✨ Scroll to top animé
+   ✨ États vides avec messages et actions
+   ✨ Design moderne avec gradients et ombres
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                            Bon test ! 🎉
+═══════════════════════════════════════════════════════════════════════════════
+
+

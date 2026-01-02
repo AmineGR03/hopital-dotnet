@@ -1,0 +1,131 @@
+@model IEnumerable<gestion_hopital.Models.Prescription>
+
+@{
+    ViewData["Title"] = "Liste des prescriptions";
+}
+
+<div class="page-header fade-in">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="page-title"><i class="fas fa-prescription me-2"></i>Liste des prescriptions</h1>
+                <p class="page-subtitle mb-0">Gérez les prescriptions médicales</p>
+            </div>
+            <a asp-action="Create" class="btn btn-danger btn-lg">
+                <i class="fas fa-plus me-2"></i>Nouvelle prescription
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="card fade-in">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>Prescriptions (@Model.Count())</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchInput" class="form-control search-input" placeholder="Rechercher une prescription..." onkeyup="window.gestionHopital.filterTable(this, 'prescriptionsTable')">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="prescriptionsTable">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-user-injured me-1"></i>Patient</th>
+                                <th><i class="fas fa-user-doctor me-1"></i>Médecin</th>
+                                <th><i class="fas fa-calendar me-1"></i>Date</th>
+                                <th><i class="fas fa-pills me-1"></i>Médicaments</th>
+                                <th><i class="fas fa-clock me-1"></i>Validité</th>
+                                <th><i class="fas fa-exclamation-triangle me-1"></i>Expiration</th>
+                                <th class="text-center"><i class="fas fa-cog me-1"></i>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var isExpired = item.DateExpiration < DateTime.Now;
+                                <tr>
+                                    <td>
+                                        <strong>@Html.DisplayFor(modelItem => item.Patient!.NomComplet)</strong>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info">@Html.DisplayFor(modelItem => item.Doctor!.NomComplet)</span>
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-calendar me-1"></i>@item.Date.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td>
+                                        <span class="text-truncate d-inline-block" style="max-width: 200px;" data-bs-toggle="tooltip" title="@item.Medicaments">
+                                            @Html.DisplayFor(modelItem => item.Medicaments)
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-secondary">@item.ValidityDays jours</span>
+                                    </td>
+                                    <td>
+                                        @if (isExpired)
+                                        {
+                                            <span class="badge bg-danger">
+                                                <i class="fas fa-exclamation-triangle me-1"></i>Expirée
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check me-1"></i>@item.DateExpiration.ToString("dd/MM/yyyy")
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="Voir les détails">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Modifier">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Supprimer">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <i class="fas fa-prescription empty-state-icon"></i>
+                    <h4>Aucune prescription trouvée</h4>
+                    <p>Commencez par créer votre première prescription.</p>
+                    <a asp-action="Create" class="btn btn-danger">
+                        <i class="fas fa-plus me-2"></i>Créer une prescription
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+}

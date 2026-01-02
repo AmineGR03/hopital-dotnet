@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gestion Hôpital</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/gestion_hopital.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-hospital me-2"></i>Gestion Hôpital
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-1"></i>Accueil
+                            </a>
+                        </li>
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index">
+                                        <i class="fas fa-users me-1"></i>Utilisateurs
+                                    </a>
+                                </li>
+                            }
+                            @if (User.IsInRole("admin") || User.IsInRole("receptionist"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Doctors" asp-action="Index">
+                                        <i class="fas fa-user-doctor me-1"></i>Médecins
+                                    </a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Patients" asp-action="Index">
+                                    <i class="fas fa-user-injured me-1"></i>Patients
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Appointments" asp-action="Index">
+                                    <i class="fas fa-calendar-check me-1"></i>Rendez-vous
+                                </a>
+                            </li>
+                            @if (User.IsInRole("admin") || User.IsInRole("doctor"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Prescriptions" asp-action="Index">
+                                        <i class="fas fa-prescription me-1"></i>Prescriptions
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid px-3 px-md-4">
+        <main role="main" class="pb-4" style="min-height: calc(100vh - 200px);">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer mt-auto">
+        <div class="container-fluid text-center">
+            <p class="mb-0">&copy; 2025 - Gestion Hôpital - Système de gestion hospitalière</p>
+        </div>
+    </footer>
+
+    <!-- Toast Container for notifications -->
+    <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;"></div>
+
+    <!-- Scroll to top button -->
+    <button id="scrollToTop" class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 m-4 shadow-lg" style="display: none; width: 50px; height: 50px; z-index: 1000; transition: all 0.3s ease;" onclick="window.gestionHopital.scrollToTop()" data-bs-toggle="tooltip" title="Retour en haut">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

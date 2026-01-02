@@ -1,0 +1,97 @@
+@model gestion_hopital.Models.Patient
+
+@{
+    ViewData["Title"] = "Modifier le patient";
+}
+
+<div class="page-header fade-in">
+    <div class="container-fluid">
+        <h1 class="page-title"><i class="fas fa-edit me-2"></i>Modifier le patient</h1>
+        <p class="page-subtitle mb-0">Modifier les informations du patient</p>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card fade-in">
+                <div class="card-body p-4">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="All" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="Id" />
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Nom" class="form-label fw-semibold">
+                                    <i class="fas fa-id-card me-2"></i>Nom
+                                </label>
+                                <input asp-for="Nom" class="form-control" placeholder="Nom de famille" />
+                                <span asp-validation-for="Nom" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Prenom" class="form-label fw-semibold">
+                                    <i class="fas fa-user me-2"></i>Prénom
+                                </label>
+                                <input asp-for="Prenom" class="form-control" placeholder="Prénom" />
+                                <span asp-validation-for="Prenom" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="DateNaissance" class="form-label fw-semibold">
+                                    <i class="fas fa-calendar-alt me-2"></i>Date de naissance
+                                </label>
+                                <input asp-for="DateNaissance" type="date" class="form-control" />
+                                <span asp-validation-for="DateNaissance" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Sexe" class="form-label fw-semibold">
+                                    <i class="fas fa-venus-mars me-2"></i>Sexe
+                                </label>
+                                <select asp-for="Sexe" class="form-select">
+                                    <option value="">Sélectionner...</option>
+                                    <option value="M">Masculin</option>
+                                    <option value="F">Féminin</option>
+                                </select>
+                                <span asp-validation-for="Sexe" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Tel" class="form-label fw-semibold">
+                                <i class="fas fa-phone me-2"></i>Téléphone
+                            </label>
+                            <input asp-for="Tel" class="form-control" placeholder="0123456789" />
+                            <span asp-validation-for="Tel" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Adresse" class="form-label fw-semibold">
+                                <i class="fas fa-map-marker-alt me-2"></i>Adresse
+                            </label>
+                            <input asp-for="Adresse" class="form-control" placeholder="Numéro et nom de rue, Ville" />
+                            <span asp-validation-for="Adresse" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Annuler
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Enregistrer les modifications
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+

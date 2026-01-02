@@ -1,0 +1,303 @@
+@model gestion_hopital.Models.Patient
+
+@{
+    ViewData["Title"] = "Détails du patient";
+}
+
+<div class="page-header fade-in">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="page-title"><i class="fas fa-user-injured me-2"></i>Détails du patient</h1>
+                <p class="page-subtitle mb-0">@Model.NomComplet</p>
+            </div>
+            <div class="btn-group">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                    <i class="fas fa-edit me-2"></i>Modifier
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Retour
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Informations personnelles -->
+            <div class="card fade-in mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-user me-2"></i>Informations personnelles</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Nom</label>
+                            <p class="mb-0"><strong>@Html.DisplayFor(model => model.Nom)</strong></p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Prénom</label>
+                            <p class="mb-0">@Html.DisplayFor(model => model.Prenom)</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Date de naissance</label>
+                            <p class="mb-0">
+                                <i class="fas fa-birthday-cake me-1"></i>@Model.DateNaissance.ToString("dd/MM/yyyy")
+                                <span class="badge bg-secondary ms-2">@Model.Age ans</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Sexe</label>
+                            <p class="mb-0">
+                                @if (Model.Sexe == "M")
+                                {
+                                    <span class="badge bg-primary"><i class="fas fa-mars me-1"></i>Masculin</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger"><i class="fas fa-venus me-1"></i>Féminin</span>
+                                }
+                            </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Téléphone</label>
+                            <p class="mb-0">
+                                <a href="tel:@Model.Tel" class="text-decoration-none">
+                                    <i class="fas fa-phone me-1"></i>@Html.DisplayFor(model => model.Tel)
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Adresse</label>
+                            <p class="mb-0">
+                                <i class="fas fa-map-marker-alt me-1"></i>@Html.DisplayFor(model => model.Adresse)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historique médical -->
+            @if (Model.HistoriqueMedical != null)
+            {
+                <div class="card fade-in mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-heartbeat me-2"></i>Historique médical</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="text-muted small">Groupe sanguin</label>
+                                <p class="mb-0">
+                                    <span class="badge bg-danger">@Model.HistoriqueMedical.GroupeSanguin</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-muted small">Allergies</label>
+                                <p class="mb-0">@Model.HistoriqueMedical.Allergies</p>
+                            </div>
+                        </div>
+
+                        @if (Model.HistoriqueMedical.DiagnosticsPasses.Any())
+                        {
+                            <hr>
+                            <h6 class="mb-3"><i class="fas fa-stethoscope me-2"></i>Diagnostics passés</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Condition</th>
+                                            <th>Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var diagnostic in Model.HistoriqueMedical.DiagnosticsPasses.OrderByDescending(d => d.Date))
+                                        {
+                                            <tr>
+                                                <td>@diagnostic.Date.ToString("dd/MM/yyyy")</td>
+                                                <td><strong>@diagnostic.Condition</strong></td>
+                                                <td><small class="text-muted">@diagnostic.Notes</small></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <!-- Rendez-vous -->
+            @if (Model.Appointments.Any())
+            {
+                <div class="card fade-in mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-calendar-check me-2"></i>Rendez-vous (@Model.Appointments.Count)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Médecin</th>
+                                        <th>Motif</th>
+                                        <th>Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var appointment in Model.Appointments.OrderByDescending(a => a.DateRdv).Take(10))
+                                    {
+                                        <tr>
+                                            <td>@appointment.DateRdv.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>@appointment.Doctor?.NomComplet</td>
+                                            <td><small>@appointment.Motif</small></td>
+                                            <td>
+                                                @{
+                                                    var statusClass = appointment.Status switch
+                                                    {
+                                                        "Terminé" => "success",
+                                                        "Annulé" => "danger",
+                                                        "Confirmé" => "info",
+                                                        _ => "warning"
+                                                    };
+                                                }
+                                                <span class="badge bg-@statusClass">@appointment.Status</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        @if (Model.Appointments.Count > 10)
+                        {
+                            <div class="text-center mt-3">
+                                <a asp-controller="Appointments" asp-action="Index" class="btn btn-sm btn-outline-primary">
+                                    Voir tous les rendez-vous
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <!-- Prescriptions -->
+            @if (Model.Prescriptions.Any())
+            {
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-prescription me-2"></i>Prescriptions (@Model.Prescriptions.Count)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Médecin</th>
+                                        <th>Médicaments</th>
+                                        <th>Validité</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var prescription in Model.Prescriptions.OrderByDescending(p => p.Date).Take(10))
+                                    {
+                                        <tr>
+                                            <td>@prescription.Date.ToString("dd/MM/yyyy")</td>
+                                            <td>@prescription.Doctor?.NomComplet</td>
+                                            <td><small>@prescription.Medicaments</small></td>
+                                            <td>
+                                                @if (prescription.DateExpiration < DateTime.Now)
+                                                {
+                                                    <span class="badge bg-danger">Expirée</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-success">@prescription.DateExpiration.ToString("dd/MM/yyyy")</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        @if (Model.Prescriptions.Count > 10)
+                        {
+                            <div class="text-center mt-3">
+                                <a asp-controller="Prescriptions" asp-action="Index" class="btn btn-sm btn-outline-danger">
+                                    Voir toutes les prescriptions
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Sidebar avec statistiques -->
+        <div class="col-md-4">
+            <div class="card fade-in mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Statistiques</h5>
+                </div>
+                <div class="card-body">
+                    <div class="stats-card success mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-muted d-block">Rendez-vous</small>
+                                <h3 class="mb-0">@Model.Appointments.Count</h3>
+                            </div>
+                            <div class="dashboard-card-icon bg-success bg-opacity-10 text-success">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-card danger mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-muted d-block">Prescriptions</small>
+                                <h3 class="mb-0">@Model.Prescriptions.Count</h3>
+                            </div>
+                            <div class="dashboard-card-icon bg-danger bg-opacity-10 text-danger">
+                                <i class="fas fa-prescription"></i>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.HistoriqueMedical != null)
+                    {
+                        <div class="stats-card info mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted d-block">Diagnostics</small>
+                                    <h3 class="mb-0">@Model.HistoriqueMedical.DiagnosticsPasses.Count</h3>
+                                </div>
+                                <div class="dashboard-card-icon bg-info bg-opacity-10 text-info">
+                                    <i class="fas fa-stethoscope"></i>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="card fade-in">
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a asp-controller="Appointments" asp-action="Create" asp-route-patientId="@Model.Id" class="btn btn-warning">
+                            <i class="fas fa-calendar-plus me-2"></i>Nouveau rendez-vous
+                        </a>
+                        @if (User.IsInRole("admin") || User.IsInRole("doctor"))
+                        {
+                            <a asp-controller="Prescriptions" asp-action="Create" asp-route-patientId="@Model.Id" class="btn btn-danger">
+                                <i class="fas fa-prescription me-2"></i>Nouvelle prescription
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

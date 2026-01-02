@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using gestion_hopital.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-circle me-1"></i>@User.Identity?.Name
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="userDropdown" style="min-width: 220px;">
+            <li>
+                <a class="dropdown-item py-2" asp-area="Identity" asp-page="/Account/Manage/Index">
+                    <i class="fas fa-user-circle me-2 text-primary"></i><strong>Mon profil</strong>
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item py-2" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">
+                    <i class="fas fa-key me-2 text-warning"></i>Changer le mot de passe
+                </a>
+            </li>
+            <li><hr class="dropdown-divider my-2"></li>
+            <li>
+                <form class="form-inline m-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="dropdown-item py-2 text-danger">
+                        <i class="fas fa-sign-out-alt me-2"></i><strong>Déconnexion</strong>
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+            <i class="fas fa-sign-in-alt me-1"></i>Connexion
+        </a>
+    </li>
+}
+</ul>

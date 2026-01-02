@@ -1,0 +1,103 @@
+@model gestion_hopital.Models.Prescription
+
+@{
+    ViewData["Title"] = "Modifier la prescription";
+}
+
+<div class="page-header fade-in">
+    <div class="container-fluid">
+        <h1 class="page-title"><i class="fas fa-edit me-2"></i>Modifier la prescription</h1>
+        <p class="page-subtitle mb-0">Modifier les informations de la prescription</p>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card fade-in">
+                <div class="card-body p-4">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="All" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="Id" />
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PatientId" class="form-label fw-semibold">
+                                    <i class="fas fa-user-injured me-2"></i>Patient
+                                </label>
+                                <select asp-for="PatientId" class="form-select" asp-items="ViewBag.PatientId">
+                                    <option value="">Sélectionner un patient...</option>
+                                </select>
+                                <span asp-validation-for="PatientId" class="text-danger"></span>
+                            </div>
+                            @if (!ViewData.ContainsKey("IsDoctor") || !(bool)ViewData["IsDoctor"]!)
+                            {
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="DoctorId" class="form-label fw-semibold">
+                                        <i class="fas fa-user-doctor me-2"></i>Médecin
+                                    </label>
+                                    <select asp-for="DoctorId" class="form-select" asp-items="ViewBag.DoctorId">
+                                        <option value="">Sélectionner un médecin...</option>
+                                    </select>
+                                    <span asp-validation-for="DoctorId" class="text-danger"></span>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Date" class="form-label fw-semibold">
+                                    <i class="fas fa-calendar-alt me-2"></i>Date de prescription
+                                </label>
+                                <input asp-for="Date" type="date" class="form-control" />
+                                <span asp-validation-for="Date" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ValidityDays" class="form-label fw-semibold">
+                                    <i class="fas fa-clock me-2"></i>Validité (jours)
+                                </label>
+                                <input asp-for="ValidityDays" type="number" min="1" max="365" class="form-control" placeholder="30" />
+                                <small class="form-text text-muted">Nombre de jours de validité de la prescription</small>
+                                <span asp-validation-for="ValidityDays" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Medicaments" class="form-label fw-semibold">
+                                <i class="fas fa-pills me-2"></i>Médicaments
+                            </label>
+                            <textarea asp-for="Medicaments" class="form-control" rows="3" placeholder="Entrez les médicaments séparés par des virgules (ex: Paracétamol 500mg, Ibuprofène 400mg)"></textarea>
+                            <small class="form-text text-muted">Liste les médicaments prescrits, séparés par des virgules</small>
+                            <span asp-validation-for="Medicaments" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Instructions" class="form-label fw-semibold">
+                                <i class="fas fa-file-medical me-2"></i>Instructions
+                            </label>
+                            <textarea asp-for="Instructions" class="form-control" rows="4" placeholder="Instructions de prise des médicaments..."></textarea>
+                            <small class="form-text text-muted">Détails sur la posologie et les instructions de prise</small>
+                            <span asp-validation-for="Instructions" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Annuler
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Enregistrer les modifications
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+

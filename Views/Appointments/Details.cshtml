@@ -1,0 +1,52 @@
+@model gestion_hopital.Models.Appointment
+
+@{
+    ViewData["Title"] = "Détails du rendez-vous";
+}
+
+<h1>Détails du rendez-vous</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Patient)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Patient!.NomComplet)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Doctor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Doctor!.NomComplet)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateRdv)
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.DateRdv.ToString("dd/MM/yyyy HH:mm")
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Motif)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Motif)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class = "col-sm-10">
+            <span class="badge bg-@(Model.Status == "Terminé" ? "success" : Model.Status == "Annulé" ? "danger" : "warning")">
+                @Html.DisplayFor(model => model.Status)
+            </span>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Modifier</a>
+    <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
+</div>
+
+
+
